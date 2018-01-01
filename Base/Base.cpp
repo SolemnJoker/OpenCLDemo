@@ -41,9 +41,9 @@ int _tmain(int argc, _TCHAR* argv[])
         cleanup();
     }
     int err = 0;
-    err = clSetKernelArg(kernel, 0, sizeof(cl_mem), memObj);
-    err|= clSetKernelArg(kernel, 1, sizeof(cl_mem), memObj + 1);
-    err|= clSetKernelArg(kernel, 2, sizeof(cl_mem), memObj + 2);
+    err = clSetKernelArg(kernel, 0, sizeof(cl_mem), &memObj);
+    err|= clSetKernelArg(kernel, 1, sizeof(cl_mem), &memObj[1]);
+    err|= clSetKernelArg(kernel, 2, sizeof(cl_mem), &memObj[2]);
 
     if (err != CL_SUCCESS)
     {

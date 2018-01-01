@@ -25,7 +25,7 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\commen\CLManager.h">
-      <Filter>源文件</Filter>
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -38,5 +38,10 @@
     <ClCompile Include="..\commen\CLManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="rotate.cl">
+      <Filter>源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>
