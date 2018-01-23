@@ -40,11 +40,11 @@ int _tmain(int argc, _TCHAR* argv[])
         err |= clSetKernelArg(kernel, 3, sizeof(int),  (void *)&img.rows);
         err |= clSetKernelArg(kernel, 4, sizeof(float), (void *)&sintheta);
         err |= clSetKernelArg(kernel, 5, sizeof(float), (void *)&costheta);
+            cl_event ev;
         if (err == CL_SUCCESS)
         {
             size_t globalThreads[] = { img.cols, img.rows, 3 };
             size_t localThreads[] = { 16, 16,1 };
-            cl_event ev;
             err = clEnqueueNDRangeKernel(command_queue, kernel, 3, NULL, globalThreads, localThreads, 0, NULL, &ev);
             auto status = clFlush(command_queue);
             clWaitForEvents(1, &ev);
@@ -60,17 +60,17 @@ int _tmain(int argc, _TCHAR* argv[])
                 0, img.dataend - img.datastart, img_result.data,
                 0, NULL, NULL);
             int a = 0;
-        }
+     }
     }
     else
     {
         return 1;
     }
 
-    cl_kernel resize_ker = clm.CreateKernel(program,"scale_kernel");
-    if (raw && resize)
-    {
-        int err = clSetKernelArg(resize_ker, 0, sizeof(cl_mem), &result);
+   cl_kernel resize_ker = clm.CreateKernel(program,"scale_kernel");
+   if (raw && resize)
+   {
+        err = clSetKernelArg(resize_ker, 0, sizeof(cl_mem), &result);
         err |= clSetKernelArg(resize_ker, 1, sizeof(cl_mem), &resize);
         err |= clSetKernelArg(resize_ker, 2, sizeof(int),  (void *)&img.cols);
         err |= clSetKernelArg(resize_ker, 3, sizeof(int),  (void *)&img.rows);
@@ -82,10 +82,10 @@ int _tmain(int argc, _TCHAR* argv[])
         {
             size_t globalThreads[] = { img_resize.cols, img_resize.rows, 3 };
             size_t localThreads[] = { 16, 16,1 };
-            cl_event ev;
-            err = clEnqueueNDRangeKernel(command_queue, resize_ker, 3, NULL, globalThreads, localThreads, 0, NULL, &ev);
+            cl_event ev2;
+            err = clEnqueueNDRangeKernel(command_queue, resize_ker, 3, NULL, globalThreads, localThreads, 0, &ev, &ev2);
             auto status = clFlush(command_queue);
-            clWaitForEvents(1, &ev);
+            clWaitForEvents(1, &ev2);
 
             if (err != CL_SUCCESS)
             {
